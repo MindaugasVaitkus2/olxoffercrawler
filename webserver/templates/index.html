@@ -1,24 +1,60 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="utf-8" />
-<title>OLX Crawler</title>
+    <meta charset="utf-8" />
+    <title>OLX Crawler</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous" />
-	 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.1/css/mdb.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.1/css/mdb.min.css" />
 </head>
-<body>	
-	   <div class="container">
+
+<body>
+    <div class="container">
         <div class="row">
             <div class="col-12">
                 <h1 id="header" class="text-center">
                     OLX Crawler
                 </h1>
             </div>
+            {% if flats %}
+            <div class="col-12">
+                <div class="col-12">
+                    <ul id="offers" class="list-group">
+                        {% for flat in flats %}
+                        <li class='list-group-item mt-2 d-flex justify-content-between align-items-center'>
+
+                            <div class="media">
+                                <div class="media-left">
+                                    <img width="125" class="img-thumbnail" src="{{ flat.image }}" alt="">
+                                </div>
+                            </div>
+                            <div class="media-body">
+                                <h2 class="media-heading">
+                                    <a href="{{ flat.url }}"> {{ flat.title }} </a>
+                                </h2>
+                                <span class="badge badge-primary badge-pill">
+											<i class='fas fa-dollar-sign p-1'>
+												{{ flat.price }}										
+											</i>     
+										</span>
+                                <span class="badge badge-info badge-pill">
+										<i class="fas fa-map-marker-alt">
+											{{ flat.location }}										
+										</i>				
+										</span>
+                            </div>
+                        </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+            {% endif %}
         </div>
-		</div>
-	
-	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
-	  <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+    <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
 </body>
+
 </html>
