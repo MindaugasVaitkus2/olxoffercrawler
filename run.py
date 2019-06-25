@@ -1,10 +1,3 @@
-from olxflatcrawler.crawler import Crawler
-from olxflatcrawler.config import OLX_URLS
+from webserver import server
 
-flatcrawler = Crawler()
-flatcrawler.start_urls = OLX_URLS
-
-flats = flatcrawler.crawl()
-
-for flat in flats:
-    print(flat)
+server.run()
