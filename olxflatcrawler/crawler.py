@@ -46,7 +46,7 @@ class Crawler(object):
             self.driver.get(url) 
 
             offers = self.driver.find_elements_by_class_name("offer")
-            for offer in offers:
+            for offer in offers[:-1]:
                 flat = self.create_flat(offer) 
                 flats.append(flat)     
         
