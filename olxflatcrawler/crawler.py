@@ -10,11 +10,11 @@ import atexit
 
 
 class Crawler(object):
-    def __init__(self): 
+    def __init__(self, start_urls=[]): 
         firefox_options = Options()
         firefox_options.add_argument("--headless")
         self.driver = webdriver.Firefox(firefox_options=firefox_options)
-        self.start_urls = []
+        self.start_urls = start_urls
 
         atexit.register(self.quit)
 
@@ -33,12 +33,13 @@ class Crawler(object):
         title = self.get_element_or_empty(firefox_web_element, ".title-cell a")
         image = self.get_element_or_empty(firefox_web_element, ".thumb img", "src")
         price = self.get_element_or_empty(firefox_web_element, ".td-price p")
+        location = self.get_element_or_empty(firefox_web_element, ".bottom-cell span")
 
-        return Flat(url, title, image, price)
+        return Flat(url, title, image, price, location)
 
     def crawl(self):
         if not self.start_urls:
-            return
+            return None
 
         flats = []
         for url in self.start_urls:
