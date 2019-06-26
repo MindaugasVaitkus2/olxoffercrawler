@@ -3,12 +3,11 @@ from flask import(
     render_template 
 )
 
-from olxflatcrawler.crawler import Crawler
-from olxflatcrawler.config import OLX_URLS
+from webserver.database import db_session
+from webserver.models import OfferModel
 
 
 @server.route("/", methods=["GET", "POST"])
-def index():
-	crawler = Crawler(OLX_URLS)
-	flats = crawler.crawl()
-	return render_template("index.html", flats=flats)
+def index():	
+	offers = OfferModel.query.all()	
+	return render_template("index.html", offers=offers)
