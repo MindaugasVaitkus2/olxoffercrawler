@@ -5,7 +5,7 @@ from selenium.common.exceptions import NoSuchElementException
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
-from olxflatcrawler.config import OLX_URLS
+from olxoffercrawler.config import OLX_URLS
 
 from webserver.database import db_session
 from webserver.models import OfferModel
