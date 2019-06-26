@@ -36,16 +36,17 @@
                                         <a href="{{ offer.url }}" target="_blank"> {{ offer.title }} </a>
                                     </h2>
 
-                                    <span class="badge badge-info badge-pill">
-                                    <i class="fas fa-map-marker-alt">
-                                        {{ offer.location }}                                        
-                                    </i>                
+                                    <span class="badge badge-muted badge-pill">
+                                    <a href="https://www.google.pl/maps/place/{{ offer.location }}" target="_blank">
+                                        <i class="fas fa-map-marker-alt">
+                                            {{ offer.location }}                                        
+                                        </i>       
+                                    </a>         
                                 </span>
                                 </div>
 
                         </div>
 
-                        
                             <p class="text-right p-2 price">
                                 {{ offer.price }}
                             </p>
