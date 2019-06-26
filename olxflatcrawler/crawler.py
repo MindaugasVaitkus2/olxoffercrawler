@@ -28,6 +28,20 @@ class Crawler(object):
         except NoSuchElementException:
             return ""
 
+    def get_pages(self):
+        pager = self.driver.find_element_by_css_selector(".pager")
+        items = pager.find_elements_by_class_name("item")
+        
+        pages = [] 
+        for item in items[:-1]:
+            try:
+                page = item.find_element_by_tag_name("a").get_attribute("href")
+                pages.append(page)
+            except NoSuchElementException:
+                pass
+
+        return pages
+
     def create_flat(self, firefox_web_element):
         url = self.get_element_or_empty(firefox_web_element, ".title-cell a", "href")
         title = self.get_element_or_empty(firefox_web_element, ".title-cell a")
@@ -45,10 +59,15 @@ class Crawler(object):
         for url in self.start_urls:
             self.driver.get(url) 
 
-            offers = self.driver.find_elements_by_class_name("offer")
-            for offer in offers[:-1]:
-                flat = self.create_flat(offer) 
-                flats.append(flat)     
-        
+            pages = self.get_pages()
+
+            for page in pages:  
+                self.driver.get(page)
+
+                offers = self.driver.find_elements_by_class_name("offer")
+                for offer in offers[:-1]:
+                    flat = self.create_flat(offer) 
+                    flats.append(flat)     
+            
         return flats
        
