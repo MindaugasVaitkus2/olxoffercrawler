@@ -17,9 +17,9 @@ class OfferModel(Base):
 	price = Column(String(60), nullable=False)
 	location = Column(String(60), nullable=False)
     
-	def __init__(self, url, title, image, location, price):
+	def __init__(self, url, title, image, price, location):
 		self.url = url
 		self.title = title
 		self.image = image
-		self.location = location
 		self.price = price
+		self.location = location
