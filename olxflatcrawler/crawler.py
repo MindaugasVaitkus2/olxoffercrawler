@@ -4,17 +4,20 @@ from selenium.webdriver.common.keys import Keys
 from selenium.common.exceptions import NoSuchElementException
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
-from olxflatcrawler.flat import Flat 
+
+from olxflatcrawler.config import OLX_URLS
+
+from webserver.database import db_session
+from webserver.models import OfferModel
 
 import atexit
 
 
 class Crawler(object):
-    def __init__(self, start_urls=[]): 
+    def __init__(self): 
         firefox_options = Options()
         firefox_options.add_argument("--headless")
         self.driver = webdriver.Firefox(firefox_options=firefox_options)
-        self.start_urls = start_urls
 
         atexit.register(self.quit)
 
@@ -42,32 +45,43 @@ class Crawler(object):
 
         return pages
 
-    def create_flat(self, firefox_web_element):
+    def create_offer_model(self, firefox_web_element):
         url = self.get_element_or_empty(firefox_web_element, ".title-cell a", "href")
         title = self.get_element_or_empty(firefox_web_element, ".title-cell a")
         image = self.get_element_or_empty(firefox_web_element, ".thumb img", "src")
         price = self.get_element_or_empty(firefox_web_element, ".td-price p")
         location = self.get_element_or_empty(firefox_web_element, ".bottom-cell span")
 
-        return Flat(url, title, image, price, location)
+        return OfferModel(url, title, image, price, location)
 
+    def truncate_table(self):
+        OfferModel.query.delete()
+        
     def crawl(self):
-        if not self.start_urls:
+        if not OLX_URLS: 
             return None
 
-        flats = []
-        for url in self.start_urls:
+        self.truncate_table()
+
+        offers = []
+        for url in OLX_URLS: 
             self.driver.get(url) 
+            print("Crawl", url)
 
             pages = self.get_pages()
-
+            
+            print("Number of pages", len(pages))
+            i = 1
+            
             for page in pages:  
                 self.driver.get(page)
+                
+                print("Page {0} of {1}".format(i, len(pages)))
+                i += 1
 
-                offers = self.driver.find_elements_by_class_name("offer")
-                for offer in offers[:-1]:
-                    flat = self.create_flat(offer) 
-                    flats.append(flat)     
-            
-        return flats
-       
+                page_offers = self.driver.find_elements_by_class_name("offer")
+                for offer in page_offers[:-1]:
+                    offer_model = self.create_offer_model(offer) 
+
+                    db_session.add(offer_model)
+                    db_session.commit()
