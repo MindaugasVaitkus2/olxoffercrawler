@@ -5,8 +5,6 @@ from selenium.common.exceptions import NoSuchElementException
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
-from olxoffercrawler.config import OLX_URLS
-
 from webserver.database import db_session
 from webserver.models import OfferModel
 
@@ -14,10 +12,11 @@ import atexit
 
 
 class Crawler(object):
-    def __init__(self): 
+    def __init__(self, start_urls=[]): 
         firefox_options = Options()
         firefox_options.add_argument("--headless")
         self.driver = webdriver.Firefox(firefox_options=firefox_options)
+        self.start_urls = start_urls
 
         atexit.register(self.quit)
 
@@ -58,13 +57,14 @@ class Crawler(object):
         OfferModel.query.delete()
         
     def crawl(self):
-        if not OLX_URLS: 
+        if not self.start_urls: 
             return None
 
         self.truncate_table()
 
         offers = []
-        for url in OLX_URLS: 
+        print(len(self.start_urls), "urls to crawl")
+        for url in self.start_urls: 
             self.driver.get(url) 
             print("Crawl", url)
 
