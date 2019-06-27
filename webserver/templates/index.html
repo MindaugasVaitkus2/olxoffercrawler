@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.1/css/mdb.min.css" />
-    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css')}}">
 </head>
 
@@ -20,40 +20,39 @@
                 </h1>
             </div>
             {% if offers %}
-            
-                <ul id="offers" class="list-group">
-                    {% for offer in offers %}
 
-                    <li class='list-group-item mt-2 d-flex justify-content-between'>
+            <ul id="offers" class="list-group">
+                {% for offer in offers %}
 
-                        
-                            <div class="media">
-                                <div class="media-left">
-                                    <img width="125" class="img-thumbnail" src="{{ offer.image }}" alt="">
-                                </div>
-                                <div class="media-body">
-                                    <h2 class="media-heading mt-0">
-                                        <a href="{{ offer.url }}" target="_blank"> {{ offer.title }} </a>
-                                    </h2>
+                <li class='list-group-item mt-2 d-flex justify-content-between'>
 
-                                    <span class="badge badge-muted badge-pill">
+                    <div class="media">
+                        <div class="media-left">
+                            <img width="125" class="img-thumbnail" src="{{ offer.image }}" alt="">
+                        </div>
+                        <div class="media-body">
+                            <h2 class="media-heading mt-0">
+                                <a href="{{ offer.url }}" target="_blank"> {{ offer.title }} </a>
+                            </h2>
+
+                            <span class="badge badge-muted badge-pill">
                                     <a href="https://www.google.pl/maps/place/{{ offer.location }}" target="_blank">
                                         <i class="fas fa-map-marker-alt">
                                             {{ offer.location }}                                        
                                         </i>       
                                     </a>         
                                 </span>
-                                </div>
-
                         </div>
 
-                            <p class="text-right p-2 price">
-                                {{ offer.price }}
-                            </p>
-                        
-            </li>
-                
-            {% endfor %}
+                    </div>
+
+                    <p class="text-right p-2 price">
+                        {{ offer.price }}
+                    </p>
+
+                </li>
+
+                {% endfor %}
             </ul>
             {% endif %}
         </div>
