@@ -21,7 +21,11 @@
             </div>
             <div class="col-12">
                 <div class="md-form">
-                    <input type="text" id="search" class="form-control" placeholder="Search">
+                    <div class="md-form input-group">    
+                        <input type="text" id="search" class="form-control" style="width:75%;" placeholder="Search">
+                        <input type="text" id="price-min" placeholder="Min price" class="form-control">
+                        <input type="text" id="price-max" placeholder="Max price" class="form-control">
+                    </div>
                 </div>    
             </div>
             {% if offers %}
