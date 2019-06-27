@@ -4,6 +4,19 @@ const INFINITY = 1000000001
 var typingTimer;
 
 
+function matchWords(str, pattern){
+	var words = pattern.split(" ")
+	var numberOfMatchedWords = 0
+
+	for(var i=0; i<words.length; i++)
+		if(str.indexOf(words[i]) !== -1){
+			str.replace(words[i], "")
+			++numberOfMatchedWords
+		}
+			
+	return (numberOfMatchedWords === words.length)	
+}
+
 function sortOffersByName(){
 	var pattern = $("#search").val().toLowerCase()
 	var offers = document.getElementsByTagName("li") 
@@ -12,8 +25,7 @@ function sortOffersByName(){
 		var title = offers[i].getElementsByClassName("title")[0].textContent
 		var location = offers[i].getElementsByClassName("location")[0].textContent
 
-		if(title.toLowerCase().indexOf(pattern) !== -1 ||
-				location.toLowerCase().indexOf(pattern) !== -1)
+		if(matchWords(title, pattern) || matchWords(location, pattern))
 			offers[i].style.display = ""
 		else
 			offers[i].setAttribute("style", "display: none !important")
