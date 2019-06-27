@@ -19,6 +19,11 @@
                     OLX Crawler
                 </h1>
             </div>
+            <div class="col-12">
+                <div class="md-form">
+                    <input type="text" id="search" class="form-control" placeholder="Search">
+                </div>    
+            </div>
             {% if offers %}
 
             <ul id="offers" class="list-group">
@@ -32,12 +37,12 @@
                         </div>
                         <div class="media-body">
                             <h2 class="media-heading mt-0">
-                                <a href="{{ offer.url }}" target="_blank"> {{ offer.title }} </a>
+                                <a href="{{ offer.url }}" target="_blank" class="title"> {{ offer.title }} </a>
                             </h2>
 
                             <span class="badge badge-muted badge-pill">
                                     <a href="https://www.google.pl/maps/place/{{ offer.location }}" target="_blank">
-                                        <i class="fas fa-map-marker-alt">
+                                        <i class="fas fa-map-marker-alt location">
                                             {{ offer.location }}                                        
                                         </i>       
                                     </a>         
@@ -60,6 +65,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
     <script src="https://unpkg.com/bootstrap-material-design@4.1.1/dist/js/bootstrap-material-design.js" integrity="sha384-CauSuKpEqAFajSpkdjv3z9t8E7RlpJ1UP0lKM/+NdtSarroVKu069AlsRPKkFBz9" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>>
 </body>
 
 </html>
