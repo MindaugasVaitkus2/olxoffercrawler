@@ -29,8 +29,6 @@ function sortOffersByPrice(){
 
 	var offers = document.getElementsByTagName("li") 
 
-	console.log("Min: ", priceMin)
-
 	for(var i=0; i<offers.length; ++i){
 		var price = parseInt(offers[i].getElementsByClassName("price")[0].textContent.replace(/\D/g,''));
 
