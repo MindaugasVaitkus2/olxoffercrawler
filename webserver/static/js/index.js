@@ -43,7 +43,7 @@ function sortOffers(){
 
 function updateNumberOfOffers(){
 	var offersLen = $("li:visible").length
-	$("#offers-numbers").text(offersLen + " offers")
+	document.getElementById("offers-numbers").textContent = offersLen + " offers"
 }
 
 $("#search").on("keyup", function(){
