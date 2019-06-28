@@ -68,3 +68,12 @@ $("#price-min, #price-max").on("keydown", function(){
 $(document).ready(function(){
 	updateNumberOfOffers()
 })
+
+$(".img-thumbnail").on("click", function() {
+   $('#imagepreview').attr('src', $(this).attr('src'));
+   $('#imagemodal').modal('show'); 
+});
+
+$("#imagemodal").on("click", function(){
+	$(this).modal("hide")
+})
