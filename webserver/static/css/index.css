@@ -11,3 +11,7 @@
 	font-weight: 800;
     white-space: nowrap;
 }
+
+.img-thumbnail:hover{
+	cursor: pointer;
+}
