@@ -8,6 +8,8 @@ from urllib.parse import urljoin
 from webserver.database import db_session
 from webserver.models import OfferModel
 
+from olxoffercrawler.logger import Logger
+
 import atexit
 
 
@@ -62,21 +64,24 @@ class Crawler(object):
 
         self.truncate_table()
 
-        offers = []
-        print(len(self.start_urls), "urls to crawl")
-        for url in self.start_urls: 
-            self.driver.get(url) 
-            print("Crawl", url)
+        process_log_msg = ""
 
-            pages = self.get_pages()
+        offers = []
+        process_log_msg += "{0} urls to crawl\n".format(len(self.start_urls))
+        for url in self.start_urls: 
+            self.driver.get(url)
+
+            process_log_msg +=  "Crawl {0}\n".format(url)
             
-            print("Number of pages", len(pages))
+            pages = self.get_pages()
+             
+            process_log_msg += "Number of pages {0}\n".format(len(pages))
             i = 1
             
             for page in pages:  
                 self.driver.get(page)
                 
-                print("Page {0} of {1}".format(i, len(pages)))
+                process_log_msg += "Page {0} of {1}\n".format(i, len(pages))
                 i += 1
 
                 page_offers = self.driver.find_elements_by_class_name("offer")
@@ -85,3 +90,5 @@ class Crawler(object):
 
                     db_session.add(offer_model)
                     db_session.commit()
+
+        Logger.new_log(process_log_msg)                      
