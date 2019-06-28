@@ -30,6 +30,8 @@ function sortOffersByName(){
 		else
 			offers[i].setAttribute("style", "display: none !important")
 	}
+
+	updateNumberOfOffers()
 }
 
 function sortOffersByPrice(){
@@ -49,6 +51,13 @@ function sortOffersByPrice(){
 		else
 			offers[i].setAttribute("style", "display: none !important")
 	}
+
+	updateNumberOfOffers()
+}
+
+function updateNumberOfOffers(){
+	var offersLen = $("li:visible").length
+	$("#offers-numbers").text(offersLen + " offers")
 }
 
 $("#search").on("keyup", function(){
@@ -68,4 +77,8 @@ $("#price-min, #price-max").on("keyup", function(){
 $("#price-min, #price-max").on("keydown", function(){
 	clearTimeout(typingTimer)
   	typingTimer = setTimeout(sortOffersByPrice, doneTypingInterval)	
+})
+
+$(document).ready(function(){
+	updateNumberOfOffers()
 })
