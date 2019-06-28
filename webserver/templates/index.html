@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css" integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.7.1/css/mdb.min.css" />
     <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Chewy&display=swap" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Chewy&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/index.css')}}">
 </head>
 
@@ -23,12 +23,12 @@
             </div>
             <div class="col-12">
                 <div class="md-form">
-                    <div class="md-form input-group">    
+                    <div class="md-form input-group">
                         <input type="text" id="search" class="form-control" placeholder="Search">
                         <input type="text" id="price-min" placeholder="Min price" class="form-control">
                         <input type="text" id="price-max" placeholder="Max price" class="form-control">
                     </div>
-                </div>    
+                </div>
             </div>
             {% if offers %}
 
@@ -66,6 +66,16 @@
                 {% endfor %}
             </ul>
             {% endif %}
+        </div>
+    </div>
+
+    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <img src="" id="imagepreview" style="width:100%;">
+                </div>
+            </div>
         </div>
     </div>
 
