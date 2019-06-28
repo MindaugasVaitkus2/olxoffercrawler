@@ -17,24 +17,8 @@ function matchWords(str, pattern){
 	return (numberOfMatchedWords === words.length)	
 }
 
-function sortOffersByName(){
-	var pattern = $("#search").val().toLowerCase()
-	var offers = document.getElementsByTagName("li") 
-
-	for(var i=0; i<offers.length; ++i){
-		var title = offers[i].getElementsByClassName("title")[0].textContent
-		var location = offers[i].getElementsByClassName("location")[0].textContent
-
-		if(matchWords(title, pattern) || matchWords(location, pattern))
-			offers[i].style.display = ""
-		else
-			offers[i].setAttribute("style", "display: none !important")
-	}
-
-	updateNumberOfOffers()
-}
-
-function sortOffersByPrice(){
+function sortOffers(){
+	var wordPattern = $("#search").val().toLowerCase()
 	var priceMin = $("#price-min").val() 
 	var priceMax = $("#price-max").val()
 
@@ -45,8 +29,10 @@ function sortOffersByPrice(){
 
 	for(var i=0; i<offers.length; ++i){
 		var price = parseInt(offers[i].getElementsByClassName("price")[0].textContent.replace(/\D/g,''));
+		var title = offers[i].getElementsByClassName("title")[0].textContent
+		var location = offers[i].getElementsByClassName("location")[0].textContent
 
-		if(price >= priceMin && price <= priceMax)
+		if(price >= priceMin && price <= priceMax && (matchWords(title, wordPattern) || matchWords(location, wordPattern)))
 			offers[i].style.display = ""
 		else
 			offers[i].setAttribute("style", "display: none !important")
@@ -62,7 +48,7 @@ function updateNumberOfOffers(){
 
 $("#search").on("keyup", function(){
  	clearTimeout(typingTimer)
-  	typingTimer = setTimeout(sortOffersByName, doneTypingInterval)
+  	typingTimer = setTimeout(sortOffers, doneTypingInterval)
 })
 
 $("#search").on('keydown', function () {
@@ -71,12 +57,12 @@ $("#search").on('keydown', function () {
 
 $("#price-min, #price-max").on("keyup", function(){
 	clearTimeout(typingTimer)
-  	typingTimer = setTimeout(sortOffersByPrice, doneTypingInterval)
+  	typingTimer = setTimeout(sortOffers, doneTypingInterval)
 })
 
 $("#price-min, #price-max").on("keydown", function(){
 	clearTimeout(typingTimer)
-  	typingTimer = setTimeout(sortOffersByPrice, doneTypingInterval)	
+  	typingTimer = setTimeout(sortOffers, doneTypingInterval)	
 })
 
 $(document).ready(function(){
