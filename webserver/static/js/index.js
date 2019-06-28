@@ -46,7 +46,10 @@ function updateNumberOfOffers(){
 	document.getElementById("offers-numbers").textContent = offersLen + " offers"
 }
 
-$("#search").on("keyup", function(){
+$("#search").on("keyup", function(e){
+	if((e.keyCode < 65 || e.keyCode > 90 && e.keyCode < 97 || e.keyCode > 122) && $(this).val() != "")
+		return $(this).val("")
+
  	clearTimeout(typingTimer)
   	typingTimer = setTimeout(sortOffers, doneTypingInterval)
 })
@@ -55,12 +58,15 @@ $("#search").on('keydown', function () {
   clearTimeout(typingTimer)
 })
 
-$("#price-min, #price-max").on("keyup", function(){
+$("#price-min, #price-max").on("keyup", function(e){
+	if((e.keyCode < 48 || e.keyCode > 57) && $(this).val() != "")
+		return $(this).val("")
+
 	clearTimeout(typingTimer)
   	typingTimer = setTimeout(sortOffers, doneTypingInterval)
 })
 
-$("#price-min, #price-max").on("keydown", function(){
+$("#price-min, #price-max").on("keydown", function(e){
 	clearTimeout(typingTimer)
   	typingTimer = setTimeout(sortOffers, doneTypingInterval)	
 })
