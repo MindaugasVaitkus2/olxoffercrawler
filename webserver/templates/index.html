@@ -15,61 +15,61 @@
 <body>
     <div class="container">
         <div class="row">
-            <div class="col-12 text-center">
+            <div class="col-md-12 col-xs-12 text-center">
                 <h1 id="header">
                     OLX Crawler
                 </h1>
-                <span id="offers-numbers" class="badge badge-secondary"></span>
+                <span id="offers-numbers" class="badge badge-secondary visible-xs-*"></span>
             </div>
-            <div class="col-12">
-                <div class="md-form">
-                    <div class="md-form input-group">
-                        <input type="text" id="search" class="form-control" placeholder="Search">
-                        <input type="text" id="price-min" placeholder="Min price" class="form-control">
-                        <input type="text" id="price-max" placeholder="Max price" class="form-control">
-                    </div>
+            <div class="col-md-12 col-xs-12">
+                <div class="md-form input-group">
+                    <input type="text" id="search" class="form-control" placeholder="Search">
+                    <input type="text" id="price-min" placeholder="Min price" class="form-control">
+                    <input type="text" id="price-max" placeholder="Max price" class="form-control">
                 </div>
             </div>
             {% if offers %}
+            <div class="col-md-12 col-xs-12">
 
-            <ul id="offers" class="list-group">
-                {% for offer in offers %}
+                <ul id="offers" class="list-group">
+                    {% for offer in offers %}
 
-                <li class='list-group-item mt-2 d-flex justify-content-between'>
+                    <li class='list-group-item mt-2 d-flex justify-content-between'>
 
-                    <div class="media">
-                        <div class="media-left">
-                            <img width="125" class="img-thumbnail" src="{{ offer.image }}" alt="">
-                        </div>
-                        <div class="media-body">
-                            <h2 class="media-heading mt-0">
-                                <a href="{{ offer.url }}" target="_blank" class="title"> {{ offer.title }} </a>
-                            </h2>
+                        <div class="media">
+                            <div class="media-left">
+                                <img width="125" class="img-thumbnail" src="{{ offer.image }}" alt="">
+                            </div>
+                            <div class="media-body">
+                                <h2 class="media-heading mt-0">
+                                    <a href="{{ offer.url }}" target="_blank" class="title"> {{ offer.title }} </a>
+                                </h2>
 
-                            <span class="badge badge-muted badge-pill">
+                                <span class="badge badge-muted badge-pill">
                                     <a href="https://www.google.pl/maps/place/{{ offer.location }}" target="_blank">
                                         <i class="fas fa-map-marker-alt location">
                                             {{ offer.location }}                                        
                                         </i>       
                                     </a>         
                                 </span>
+                            </div>
+
                         </div>
 
-                    </div>
+                        <p class="text-right p-2 price">
+                            {{ offer.price }}
+                        </p>
 
-                    <p class="text-right p-2 price">
-                        {{ offer.price }}
-                    </p>
+                    </li>
 
-                </li>
-
-                {% endfor %}
-            </ul>
+                    {% endfor %}
+                </ul>
+            </div>
             {% endif %}
         </div>
     </div>
 
-    <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal fade active" id="imagemodal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-body">
