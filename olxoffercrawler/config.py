@@ -21,4 +21,4 @@ def read_urls(filename):
             else:
                 print(line, "is not a valid URL!")
 
-    return urls
+    return list(set(urls))
