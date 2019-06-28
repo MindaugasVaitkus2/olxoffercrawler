@@ -158,4 +158,7 @@ pip-selfcheck.json
 geckodriver.log
 
 # Database
-#data.db
+data.db
+
+# Log
+crawlerlog.txt
