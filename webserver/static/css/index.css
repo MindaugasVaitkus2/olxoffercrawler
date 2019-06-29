@@ -15,3 +15,7 @@
 .img-thumbnail:hover{
 	cursor: pointer;
 }
+
+.clipboard:hover{
+	cursor: pointer;
+}

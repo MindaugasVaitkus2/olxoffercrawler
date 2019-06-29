@@ -1,3 +1,11 @@
+function copyToClipboard(link) {
+    var $temp = $("<input>");
+    $("body").append($temp);
+    $temp.val(link).select();
+    document.execCommand("copy");
+    $temp.remove();
+}
+
 $(document).ready(function(){
 	$('#offers-table').DataTable()
 	$("#offers-table").on('page.dt', function() {
@@ -14,4 +22,10 @@ $(document).ready(function(){
 	$("#imagemodal").on("click", function(){
 		$(this).modal("hide")
 	})
+
+	$(".clipboard").on("click", function(){
+		var link = $(this).parent().parent().parent().children("h2").children("a").attr("href")
+		copyToClipboard(link)
+	})
+
 })
