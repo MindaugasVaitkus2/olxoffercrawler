@@ -88,14 +88,18 @@ class Crawler(object):
             for page in pages:  
                 self.driver.get(page)
                 
-                process_log_msg += "Page {0} of {1}\n".format(i, len(pages))
+                process_log_msg += "Page {0} of {1}\t".format(i, len(pages))
                 i += 1
 
+                page_offers_sum = 0
                 page_offers = self.driver.find_elements_by_class_name("offer")
+                process_log_msg += "collecting {0} elements\n".format(len(page_offers))
+                page_offers_sum += len(page_offers)
                 for offer in page_offers[:-1]:
                     offer_model = self.create_offer_model(offer) 
-
                     db_session.add(offer_model)
+
+                process_log_msg += "Done! Collected {0} elements\n".format(page_offers_sum)
 
         db_session.commit()
 
