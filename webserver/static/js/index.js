@@ -5,17 +5,13 @@ $(document).ready(function(){
     	scrollTop: $(".dataTables_wrapper").offset().top
   		}, 'slow');
 	});
-})
 
-$(document).on("click", function(){
-	window.scrollTo(0, 0)
-}, ".paginate_button")
+ 	$(".img-thumbnail").on("click", function() {
+   		$('#imagepreview').attr('src', $(this).attr('src'));
+   		$('#imagemodal').modal('show'); 
+	});
 
-$(".img-thumbnail").on("click", function() {
-   $('#imagepreview').attr('src', $(this).attr('src'));
-   $('#imagemodal').modal('show'); 
-});
-
-$("#imagemodal").on("click", function(){
-	$(this).modal("hide")
+	$("#imagemodal").on("click", function(){
+		$(this).modal("hide")
+	})
 })
