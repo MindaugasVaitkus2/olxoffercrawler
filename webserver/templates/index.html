@@ -29,6 +29,9 @@
                 <span id="offers-numbers" class="badge badge-secondary visible-xs-*">
                     {{ offers|length }} offers
                 </span>
+                <span class="badge badge-info">
+                    Last run: {{ last_run }}
+                </span>
             </div>
             {% if offers %}
             <div class="col-md-12 col-xs-12">
