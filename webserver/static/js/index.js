@@ -24,13 +24,6 @@ function sortOffers(){
 		else
 			offers[i].setAttribute("style", "display: none !important")
 	}
-
-	updateNumberOfOffers()
-}
-
-function updateNumberOfOffers(){
-	var offersLen = $("li:visible").length
-	document.getElementById("offers-numbers").textContent = offersLen + " offers"
 }
 
 $("#price-min, #price-max").on("keyup", function(e){
@@ -47,7 +40,6 @@ $("#price-min, #price-max").on("keydown", function(e){
 })
 
 $(document).ready(function(){
-	updateNumberOfOffers()
 	$('#offers-table').DataTable();
 })
 
