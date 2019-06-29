@@ -15,8 +15,8 @@ $(document).ready(function(){
 				var link = $(this).parent().parent().parent().children("h2").children("a").attr("href")
 				copyToClipboard(link)
 
-				$(this).animate({opacity: 0.5},  250, function(){
-					$(this).animate({opacity: 1}, 250)
+				$(this).animate({opacity: 0.5},  150, function(){
+					$(this).animate({opacity: 1}, 150)
 				})
 			})		
 			
