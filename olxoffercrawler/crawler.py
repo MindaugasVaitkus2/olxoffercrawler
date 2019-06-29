@@ -1,7 +1,4 @@
 from selenium import webdriver
-from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import NoSuchElementException
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
@@ -17,12 +14,7 @@ import re
 
 class Crawler(object):
     def __init__(self, start_urls=[]): 
-        cap = DesiredCapabilities().FIREFOX
-        cap["marionette"] = False 
-        firefox_options = Options()
-        firefox_options.binary = r"geckodriver"
-        firefox_options.add_argument("--headless")
-        self.driver = webdriver.Firefox(capabilities=cap, firefox_options=firefox_options)
+        self.driver = webdriver.PhantomJS(executable_path=r"bin/phantomjs")
         self.start_urls = start_urls
 
         atexit.register(self.quit)
@@ -30,9 +22,9 @@ class Crawler(object):
     def quit(self):
         self.driver.quit()
 
-    def get_element_or_empty(self, firefox_web_element, selector, attribute=None):
+    def get_element_or_empty(self, phantomjs_web_element, selector, attribute=None):
         try:
-            element = firefox_web_element.find_element_by_css_selector(selector)
+            element = phantomjs_web_element.find_element_by_css_selector(selector)
             return element.text if not attribute else element.get_attribute(attribute)
         except NoSuchElementException:
             return ""
@@ -51,12 +43,12 @@ class Crawler(object):
 
         return pages
 
-    def create_offer_model(self, firefox_web_element):
-        url = self.get_element_or_empty(firefox_web_element, ".title-cell a", "href")
-        title = self.get_element_or_empty(firefox_web_element, ".title-cell a")
-        image = self.get_element_or_empty(firefox_web_element, ".thumb img", "src")
-        price = self.get_element_or_empty(firefox_web_element, ".td-price p")
-        location = self.get_element_or_empty(firefox_web_element, ".bottom-cell span")
+    def create_offer_model(self, phantomjs_web_element):
+        url = self.get_element_or_empty(phantomjs_web_element, ".title-cell a", "href")
+        title = self.get_element_or_empty(phantomjs_web_element, ".title-cell a")
+        image = self.get_element_or_empty(phantomjs_web_element, ".thumb img", "src")
+        price = self.get_element_or_empty(phantomjs_web_element, ".td-price p")
+        location = self.get_element_or_empty(phantomjs_web_element, ".bottom-cell span")
 
         price = int(re.sub("[^0-9]", "", price))
 
@@ -84,14 +76,14 @@ class Crawler(object):
              
             process_log_msg += "Number of pages {0}\n".format(len(pages))
             i = 1
-            
+           
+            page_offers_sum = 0
             for page in pages:  
                 self.driver.get(page)
                 
                 process_log_msg += "Page {0} of {1}\t".format(i, len(pages))
                 i += 1
 
-                page_offers_sum = 0
                 page_offers = self.driver.find_elements_by_class_name("offer")
                 process_log_msg += "collecting {0} elements\n".format(len(page_offers))
                 page_offers_sum += len(page_offers)
@@ -99,7 +91,7 @@ class Crawler(object):
                     offer_model = self.create_offer_model(offer) 
                     db_session.add(offer_model)
 
-                process_log_msg += "Done! Collected {0} elements\n".format(page_offers_sum)
+            process_log_msg += "Done! Collected {0} elements\n".format(page_offers_sum)
 
         db_session.commit()
 
