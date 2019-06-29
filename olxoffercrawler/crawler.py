@@ -96,3 +96,4 @@ class Crawler(object):
         db_session.commit()
 
         Logger.new_log(process_log_msg)                      
+        Logger.save_last_run()
