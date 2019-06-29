@@ -15,4 +15,4 @@ threading.Timer(18000000, run_crawler_and_start_new_timer).start()
 if __name__ == '__main__':
 	import os
 	port = int(os.environ.get('PORT', 5000))
-	server.run(host="0.0.0.0", port=port)
+	server.run(host="0.0.0.0", port=port, threaded=True)
