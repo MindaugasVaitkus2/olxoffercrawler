@@ -4,19 +4,6 @@ const INFINITY = 1000000001
 var typingTimer;
 
 
-function matchWords(str, pattern){
-	var words = pattern.split(" ")
-	var numberOfMatchedWords = 0
-
-	for(var i=0; i<words.length; i++)
-		if(str.indexOf(words[i]) !== -1){
-			str.replace(words[i], "")
-			++numberOfMatchedWords
-		}
-			
-	return (numberOfMatchedWords === words.length)	
-}
-
 function sortOffers(){
 	var wordPattern = $("#search").val().toLowerCase()
 	var priceMin = $("#price-min").val() 
@@ -46,21 +33,9 @@ function updateNumberOfOffers(){
 	document.getElementById("offers-numbers").textContent = offersLen + " offers"
 }
 
-$("#search").on("keyup", function(e){
-	if((e.keyCode < 65 || e.keyCode > 90 && e.keyCode < 97 || e.keyCode > 122) && $(this).val() != "")
-		return $(this).val("")
-
- 	clearTimeout(typingTimer)
-  	typingTimer = setTimeout(sortOffers, doneTypingInterval)
-})
-
-$("#search").on('keydown', function () {
-  clearTimeout(typingTimer)
-})
-
 $("#price-min, #price-max").on("keyup", function(e){
 	if((e.keyCode < 48 || e.keyCode > 57) && $(this).val() != "")
-		return $(this).val("")
+		return 
 
 	clearTimeout(typingTimer)
   	typingTimer = setTimeout(sortOffers, doneTypingInterval)
@@ -73,6 +48,7 @@ $("#price-min, #price-max").on("keydown", function(e){
 
 $(document).ready(function(){
 	updateNumberOfOffers()
+	$('#offers-table').DataTable();
 })
 
 $(".img-thumbnail").on("click", function() {

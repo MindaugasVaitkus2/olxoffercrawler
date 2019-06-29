@@ -11,6 +11,7 @@ from webserver.models import OfferModel
 from olxoffercrawler.logger import Logger
 
 import atexit
+import re
 
 
 class Crawler(object):
@@ -53,6 +54,8 @@ class Crawler(object):
         price = self.get_element_or_empty(firefox_web_element, ".td-price p")
         location = self.get_element_or_empty(firefox_web_element, ".bottom-cell span")
 
+        price = int(re.sub("[^0-9]", "", price))
+
         return OfferModel(url, title, image, price, location)
 
     def truncate_table(self):
@@ -89,6 +92,7 @@ class Crawler(object):
                     offer_model = self.create_offer_model(offer) 
 
                     db_session.add(offer_model)
-                    db_session.commit()
+
+        db_session.commit()
 
         Logger.new_log(process_log_msg)                      
