@@ -1,6 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.firefox.options import Options
 from selenium.webdriver.common.keys import Keys
+from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
 from selenium.common.exceptions import NoSuchElementException
 from bs4 import BeautifulSoup
 from urllib.parse import urljoin
@@ -16,9 +17,12 @@ import re
 
 class Crawler(object):
     def __init__(self, start_urls=[]): 
+        cap = DesiredCapabilities().FIREFOX
+        cap["marionette"] = False 
         firefox_options = Options()
+        firefox_options.binary = r"geckodriver"
         firefox_options.add_argument("--headless")
-        self.driver = webdriver.Firefox(firefox_options=firefox_options)
+        self.driver = webdriver.Firefox(capabilities=cap, firefox_options=firefox_options)
         self.start_urls = start_urls
 
         atexit.register(self.quit)
