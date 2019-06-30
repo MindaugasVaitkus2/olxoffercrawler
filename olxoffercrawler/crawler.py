@@ -88,11 +88,14 @@ class Crawler(object):
                 process_log_msg += "collecting {0} elements\n".format(len(page_offers))
                 page_offers_sum += len(page_offers)
                 for offer in page_offers[:-1]:
-                    offer_model = self.create_offer_model(offer) 
-                    db_session.add(offer_model)
-
+                    offers.append(self.create_offer_model(offer)) 
+                    
             process_log_msg += "Done! Collected {0} elements\n".format(page_offers_sum)
+ 
+        offers = list(set(offers))
+        process_log_msg += "{0} collected elements after removed duplicates\n".format(len(offers))
 
+        db_session.add_all(offers)
         db_session.commit()
 
         Logger.new_log(process_log_msg)                      
