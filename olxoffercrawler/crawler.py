@@ -14,7 +14,7 @@ import re
 
 class Crawler(object):
     def __init__(self, start_urls=[]): 
-        self.driver = webdriver.PhantomJS(executable_path=r"bin/phantomjs")
+        self.driver = webdriver.PhantomJS(executable_path=r"phantomjs/phantomjs")
         self.start_urls = start_urls
 
         atexit.register(self.quit)
