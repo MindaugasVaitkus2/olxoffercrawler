@@ -64,8 +64,7 @@ class Crawler(object):
         self.truncate_table()
 
         process_log_msg = ""
-
-        offers = []
+ 
         process_log_msg += "{0} urls to crawl\n".format(len(self.start_urls))
         for url in self.start_urls: 
             self.driver.get(url)
@@ -77,7 +76,7 @@ class Crawler(object):
             process_log_msg += "Number of pages {0}\n".format(len(pages))
             i = 1
            
-            page_offers_sum = 0
+            page_offers_sum = 0 
             for page in pages:  
                 self.driver.get(page)
                 
@@ -88,14 +87,14 @@ class Crawler(object):
                 process_log_msg += "collecting {0} elements\n".format(len(page_offers))
                 page_offers_sum += len(page_offers)
                 for offer in page_offers[:-1]:
-                    offers.append(self.create_offer_model(offer)) 
+                    db_session.add(self.create_offer_model(offer)) 
                     
             process_log_msg += "Done! Collected {0} elements\n".format(page_offers_sum)
  
-        offers = list(set(offers))
-        process_log_msg += "{0} collected elements after removed duplicates\n".format(len(offers))
+        #offers = list(set(offers))
+        #process_log_msg += "{0} collected elements after removed duplicates\n".format(len(offers))
 
-        db_session.add_all(offers)
+        #db_session.add_all(offers)
         db_session.commit()
 
         Logger.new_log(process_log_msg)                      
