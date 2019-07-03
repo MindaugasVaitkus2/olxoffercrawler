@@ -6,6 +6,8 @@ from urllib.parse import urljoin
 from webserver.database import db_session
 from webserver.models import OfferModel
 
+from offercrawler.logger import Logger
+
 import atexit
 import re
 
@@ -92,3 +94,5 @@ class Crawler(object):
 
         db_session.add_all(offers)
         db_session.commit() 
+        
+        Logger.save_last_run()
