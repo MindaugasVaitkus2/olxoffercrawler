@@ -1,7 +1,7 @@
 import re
 import urllib.parse
 
-from olxoffercrawler.logger import Logger
+from offercrawler.logger import Logger
 
 
 def is_url(url):
@@ -17,11 +17,11 @@ def read_urls(filename):
             line = line.strip()
             if is_url(line):
                 if not is_olx_url(line):
-                    Logger.new_log("{0} is not a OLX URL".format(line), error=True)                    
+                    print("{0} is not a OLX URL".format(line), error=True)                    
                     continue
                     
                 urls.append(line)
             else:
-                Logger.new_log("{0} is not a valid URL".format(line), error=True) 
+                print("{0} is not a valid URL".format(line), error=True) 
 
     return list(set(urls))

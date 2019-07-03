@@ -6,8 +6,6 @@ from urllib.parse import urljoin
 from webserver.database import db_session
 from webserver.models import OfferModel
 
-from olxoffercrawler.logger import Logger
-
 import atexit
 import re
 
@@ -62,40 +60,35 @@ class Crawler(object):
             return None
 
         self.truncate_table()
-
-        process_log_msg = ""
  
-        process_log_msg += "{0} urls to crawl\n".format(len(self.start_urls))
+        print("{0} urls to crawl\n".format(len(self.start_urls)))
         for url in self.start_urls: 
             self.driver.get(url)
 
-            process_log_msg +=  "Crawl {0}\n".format(url)
+            print("Crawl {0}\n".format(url))
             
             pages = self.get_pages()
              
-            process_log_msg += "Number of pages {0}\n".format(len(pages))
+            print("Number of pages {0}\n".format(len(pages)))
             i = 1
            
             page_offers_sum = 0 
             for page in pages:  
                 self.driver.get(page)
                 
-                process_log_msg += "Page {0} of {1}\t".format(i, len(pages))
+                print("Page {0} of {1}\t".format(i, len(pages)))
                 i += 1
 
                 page_offers = self.driver.find_elements_by_class_name("offer")
-                process_log_msg += "collecting {0} elements\n".format(len(page_offers))
+                print("collecting {0} elements\n".format(len(page_offers)))
                 page_offers_sum += len(page_offers)
                 for offer in page_offers[:-1]:
                     db_session.add(self.create_offer_model(offer)) 
                     
-            process_log_msg += "Done! Collected {0} elements\n".format(page_offers_sum)
+            print("Done! Collected {0} elements\n".format(page_offers_sum))
  
-        #offers = list(set(offers))
-        #process_log_msg += "{0} collected elements after removed duplicates\n".format(len(offers))
+        offers = list(set(offers))
+        print( "{0} collected elements after removed duplicates\n".format(len(offers)))
 
-        #db_session.add_all(offers)
-        db_session.commit()
-
-        Logger.new_log(process_log_msg)                      
-        Logger.save_last_run()
+        db_session.add_all(offers)
+        db_session.commit() 
