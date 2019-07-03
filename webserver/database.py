@@ -6,7 +6,7 @@ from sqlalchemy.orm import(
 )
 
 
-engine = create_engine("sqlite:///data.db", convert_unicode=True)
+engine = create_engine("sqlite:///data.db", convert_unicode=True, connect_args={'check_same_thread':False})
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
