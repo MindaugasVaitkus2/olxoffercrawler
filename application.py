@@ -1,8 +1,8 @@
 from apscheduler.schedulers.background import BackgroundScheduler 
 
-from olxoffercrawler.crawler import Crawler
-from olxoffercrawler.config import read_urls
-from webserver import server
+from offercrawler.crawler import Crawler
+from offercrawler.config import read_urls
+from webserver import application 
 
 import atexit
 
@@ -14,9 +14,7 @@ def run_crawler():
     crawler = Crawler(urls)
     crawler.crawl()    
 
-if __name__ == '__main__':
-    import os
-    port = int(os.environ.get('PORT', 5000))
-    sched.start()
-    server.run(host="0.0.0.0", port=port, threaded=True)
-
+if __name__ == '__main__': 
+    sched.start() 
+    application.run()
+   

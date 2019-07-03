@@ -1,4 +1,4 @@
-from webserver import server
+from webserver import application
 from flask import(
     render_template 
 )
@@ -6,10 +6,10 @@ from flask import(
 from webserver.database import db_session
 from webserver.models import OfferModel
 
-from olxoffercrawler.logger import Logger
+from offercrawler.logger import Logger
 
 
-@server.route("/", methods=["GET", "POST"])
+@application.route("/", methods=["GET", "POST"])
 def index():	
     offers = OfferModel.query.all()	
     last_run = Logger.get_last_run()

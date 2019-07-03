@@ -3,7 +3,7 @@ from flask import(
     render_template
 )
 
-server = Flask(__name__)
+application = Flask(__name__)
 
 from webserver.database import init_database
 init_database()

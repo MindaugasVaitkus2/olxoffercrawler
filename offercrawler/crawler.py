@@ -63,36 +63,33 @@ class Crawler(object):
 
         self.truncate_table()
  
-        print("{0} urls to crawl\n".format(len(self.start_urls)))
+        print("{0} urls to crawl".format(len(self.start_urls)))
+
         for url in self.start_urls: 
             self.driver.get(url)
 
-            print("Crawl {0}\n".format(url))
+            print("Crawl {0}".format(url))
             
             pages = self.get_pages()
              
-            print("Number of pages {0}\n".format(len(pages)))
+            print("Number of pages {0}".format(len(pages)))
             i = 1
            
             page_offers_sum = 0 
             for page in pages:  
                 self.driver.get(page)
                 
-                print("Page {0} of {1}\t".format(i, len(pages)))
+                print("Page {0} of {1}".format(i, len(pages)), end="\t")
                 i += 1
 
                 page_offers = self.driver.find_elements_by_class_name("offer")
-                print("collecting {0} elements\n".format(len(page_offers)))
+                print("collecting {0} elements".format(len(page_offers)))
                 page_offers_sum += len(page_offers)
                 for offer in page_offers[:-1]:
                     db_session.add(self.create_offer_model(offer)) 
                     
-            print("Done! Collected {0} elements\n".format(page_offers_sum))
+            print("Done! Collected {0} elements".format(page_offers_sum))
  
-        offers = list(set(offers))
-        print( "{0} collected elements after removed duplicates\n".format(len(offers)))
-
-        db_session.add_all(offers)
         db_session.commit() 
         
         Logger.save_last_run()
