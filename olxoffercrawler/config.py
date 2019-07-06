@@ -1,7 +1,7 @@
 import re
 import urllib.parse
 
-from offercrawler.logger import Logger
+from olxoffercrawler.logger import Logger
 
 
 def is_url(url):

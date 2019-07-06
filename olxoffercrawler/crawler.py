@@ -5,7 +5,7 @@ from urllib.parse import urljoin
 from webserver.database import db_session
 from webserver.models import OfferModel
 
-from offercrawler.logger import Logger
+from olxoffercrawler.logger import Logger
 
 import atexit
 import re
