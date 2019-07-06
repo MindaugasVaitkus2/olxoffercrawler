@@ -1,6 +1,5 @@
 from selenium import webdriver
 from selenium.common.exceptions import NoSuchElementException
-from bs4 import BeautifulSoup
 from urllib.parse import urljoin
 
 from webserver.database import db_session
@@ -65,6 +64,7 @@ class Crawler(object):
  
         print("{0} urls to crawl".format(len(self.start_urls)))
 
+        offers = []
         for url in self.start_urls: 
             self.driver.get(url)
 
@@ -86,10 +86,15 @@ class Crawler(object):
                 print("collecting {0} elements".format(len(page_offers)))
                 page_offers_sum += len(page_offers)
                 for offer in page_offers[:-1]:
-                    db_session.add(self.create_offer_model(offer)) 
+                    offers.append(self.create_offer_model(offer)) 
                     
             print("Done! Collected {0} elements".format(page_offers_sum))
  
+        offers = list(set(offers))
+
+        print("{0} elements after remove duplicates".format(len(offers)))
+
+        db_session.add_all(offers)
         db_session.commit() 
         
         Logger.save_last_run()
