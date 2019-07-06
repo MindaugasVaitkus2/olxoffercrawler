@@ -8,7 +8,7 @@ import atexit
 
 sched = BackgroundScheduler()
 
-@sched.scheduled_job('interval', hours=5)
+@sched.scheduled_job('interval', seconds=18000)
 def run_crawler():
     urls = read_urls("URLS")
     crawler = Crawler(urls)
@@ -16,5 +16,5 @@ def run_crawler():
 
 if __name__ == '__main__': 
     sched.start() 
-    application.run()
+    application.run(threaded=True)
    
