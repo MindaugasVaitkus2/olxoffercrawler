@@ -17,11 +17,11 @@ def read_urls(filename):
             line = line.strip()
             if is_url(line):
                 if not is_olx_url(line):
-                    print("{0} is not a OLX URL".format(line), error=True)                    
+                    print("{0} is not a OLX URL".format(line))                    
                     continue
                     
                 urls.append(line)
             else:
-                print("{0} is not a valid URL".format(line), error=True) 
+                print("{0} is not a valid URL".format(line)) 
 
     return list(set(urls))
