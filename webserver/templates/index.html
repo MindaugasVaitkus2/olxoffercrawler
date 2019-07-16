@@ -48,7 +48,11 @@
                             <td>
                                 <div class="media">
                                     <div class="media-left">
-                                        <img width="125" class="img-thumbnail" src="{{ offer.image }}" alt="">
+                                        {% if offer.image %}
+                                            <img width="125" class="img-thumbnail" src="{{ offer.image }}" alt="">
+                                        {% else %}
+                                            <img width="125" class="img-thumbnail" src="{{ url_for('static', filename='icons/crawler.png') }}" alt="">
+                                        {% endif %}
                                     </div>
                                     <div class="media-body">
                                         <h2 class="media-heading mt-0">
