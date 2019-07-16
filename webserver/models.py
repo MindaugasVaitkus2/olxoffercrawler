@@ -10,11 +10,11 @@ class OfferModel(Base):
     __tablename__ = "Offers"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    url = Column(String(160))
-    title = Column(String(60), unique=False, nullable=False)
-    image = Column(String(120), nullable=False)
+    url = Column(String(250))
+    title = Column(String(250), unique=False, nullable=False)
+    image = Column(String(250), nullable=False)
     price = Column(Integer, nullable=False)
-    location = Column(String(60), nullable=False)
+    location = Column(String(250), nullable=False)
 
     def __init__(self, url, title, image, price, location):
         self.url = url
