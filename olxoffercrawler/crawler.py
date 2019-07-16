@@ -29,16 +29,20 @@ class Crawler(object):
             return ""
 
     def get_pages(self):
-        pager = self.driver.find_element_by_css_selector(".pager")
+        try:
+            pager = self.driver.find_element_by_css_selector(".pager")
+        except NoSuchElementException:
+            return [self.driver.current_url]
+
         items = pager.find_elements_by_class_name("item")
-        
-        pages = [] 
-        for item in items[:-1]:
+ 
+        pages = [self.driver.current_url]
+        for item in items[1:]: 
             try:
                 page = item.find_element_by_tag_name("a").get_attribute("href")
                 pages.append(page)
             except NoSuchElementException:
-                pass
+                pass 
 
         return pages
 
